@@ -29,8 +29,9 @@ Route::post('/registro',[UsuarioController::class,'registroForm'])->name('regist
 Route::prefix('/usuario')->middleware("VerificarUsuario")->group(function (){
     Route::get('/menu',[UsuarioController::class,'menu'])->name('usuario.menu');
     //
-    Route::get('/eliminar/{codigo}',[TableroController::class,'eliminarTablero'])->name('usuario.eliminar.Tablero');
+    Route::get('/eliminar/{codigo?}',[TableroController::class,'eliminarTablero'])->name('usuario.eliminar.Tablero');
     Route::get('/eliminar',[TableroController::class,'eliminarTablero'])->name('usuario.eliminar.Tablero');
+    Route::get('/mensaje/{codigo?}',[UsuarioController::class,'mensaje'])->name('usuario.mensaje');
     //
     Route::get('/tablero/{codigo}', [TableroController::class,'detalleTablero'])->name('usuario.detalle.tablero');
     Route::get('/crear',[UsuarioController::class,'saludo']);

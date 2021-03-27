@@ -83,7 +83,7 @@ class UsuarioController extends Controller
 
     public function menu(){
         $tableros = Tablero::where('usuario1_id',session('usuario')->id)->orWhere('usuario2_id',session('usuario')->id)->get();
-        $tableros2 = Tablero::where('usuario1_id',session('usuario')->id)->where('ganador_id',session('usuario')->id)->get();
+        $tableros2 = Tablero::where('usuario1_id',session('usuario')->id)->orWhere('usuario2_id',session('usuario')->id)->where('ganador_id',session('usuario')->id)->get();
         $contador=0;
         $contador2=0;
         foreach($tableros as $a){
@@ -91,7 +91,7 @@ class UsuarioController extends Controller
             $contador++;
         }
         foreach($tableros2 as $a){
-            if($a->estatus==1)
+            if($a->ganador_id==session('usuario')->id)
             $contador2++;
         }
         return view("menu",["mensaje"=>$contador],["mensaje2"=>$contador2]);
@@ -181,7 +181,7 @@ class UsuarioController extends Controller
     }
 
     public function historial(){
-        $tableros = Tablero::where('estatus','concluido')->where('usuario1_id',session('usuario')->id)->orWhere('usuario2_id',session('usuario')->id)->get();
+        $tableros = Tablero::where('estatus','finalizado')->where('usuario1_id',session('usuario')->id)->orWhere('usuario2_id',session('usuario')->id)->get();
         foreach ($tableros as $tablero) {
             $usuario = Usuario::find($tablero->usuario1_id);
             $usuario2 = Usuario::find($tablero->usuario2_id);
@@ -192,8 +192,18 @@ class UsuarioController extends Controller
 
     }
 
-    public function mensaje(){
-         return view("menu");
+    public function mensaje($codigo){
+        $tablero = Tablero::where("codigo",$codigo)->first();
+        $ultimoTiro = Tablero_Movimiento::where("tablero_id",$tablero->id)->orderBy("created_at",'desc')->first();
+        $ultimo = $ultimoTiro->usuario_id;
+        if($ultimoTiro->usuario_id==$tablero->usuario1_id||$ultimoTiro->usuario_id==$tablero->usuario2_id){
+            $usuario = Tablero::find($codigo);
+            $tablero->ganador_id=$ultimo;
+            $tablero->save();
+        }
+         $usuarios = Usuario::where('id',$ultimo)->first();
+         $nombre = $usuarios->correo;
+         return view("mensaje",["ganador"=>$nombre]);
     }
 
 

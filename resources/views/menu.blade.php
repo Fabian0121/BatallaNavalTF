@@ -25,25 +25,7 @@
     @for($i=0;$i<2;$i++)
     <br>
     @endfor
-    <h3 class="m-0 font-weight-bold text-info"> Detalles ultima partida </h3>
     <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Codigo</th>
-                    <th>Estatus</th>
-                    <th>Jugador 1</th>
-                    <th>Jugador 2</th>
-                    <th>Ganador</th>
-                    <th>Creado</th>
-                    <th>Detalles</th>
-                </tr>
-                </thead>
-
-            </table>
-        </div>
     </div>
 </div>
 @endsection

@@ -185,7 +185,36 @@ class TableroController extends Controller
         $tablero = Tablero::where("codigo",$codigo)->first();
         if(!$tablero)
             return json_encode(["error" => "no se encontro el tablero"]);
-
+        //Esta funcion se encarga de terminar el juego
+        $estaus=1;
+        $c1=0;
+        $c2=0;
+        $barcosEnemigos = Tablero_Movimiento::where('tablero_id',$tablero->id)->where("usuario_id","!=",session('usuario')->id)->where("estatus",$estaus)->get();
+        $barcosEnemigos2 = Tablero_Movimiento::where('tablero_id',$tablero->id)->where("usuario_id",session('usuario')->id)->where("estatus",$estaus)->get();
+        foreach($barcosEnemigos as $x){
+            if($x->estatus==1){
+                $c1++;
+            }
+        }
+        foreach($barcosEnemigos2 as $x){
+            if($x->estatus==1){
+                $c2++;
+            }
+        }
+        if($c1==3){
+            //$tablero->ganador = $tablero->usuario2_id;
+            $tablero->estatus = "finalizado";
+            $tablero->save();
+            return json_encode(["estatus" =>"fin","mensaje" => "Fin del juego"]);
+            //return view("mensaje");
+        }if($c2==3){
+            //$tablero->ganador = $tablero->usuario1_id;
+            $tablero->estatus = "finalizado";
+            $tablero->save();
+            return json_encode(["estatus" =>"fin","mensaje" => "Fin del juego"]);
+            //return view("mensaje");
+        }else
+        //
         $ultimoTiro = Tablero_Movimiento::where("tablero_id",$tablero->id)->orderBy("created_at",'desc')->first();
         if(!$ultimoTiro){
             if(session('usuario')->id == $tablero->usuario1_id){
@@ -201,17 +230,6 @@ class TableroController extends Controller
                     $nuevoMovimiento->estatus = 0;
                 }
                 $nuevoMovimiento->save();
-//Salvacion
-//$tableros3 = Tablero::where('usuario1_id',session('usuario')->id)->get();
-$idt=63;
-$estaus=1;
-$i=0;
-$mensa="HOLALALA";
-$barcosEnemigos = Tablero_Movimiento::where('tablero_id',$idt)->where("usuario_id","!=",session('usuario')->id)->where("estatus",$estaus)->get();
-foreach($barcosEnemigos as $x){
-     $i++;
-}
-//
 
                 return json_encode(["estatus" => "success","mensaje" => $nuevoMovimiento->estatus == 1? "¡BARCO HUNDIDO!": "¡FALLASTE!" ]);
             }else{

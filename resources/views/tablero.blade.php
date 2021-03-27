@@ -228,10 +228,10 @@
                         if(data.estatus == "success"){
                             contador--;
                             alert(data.mensaje);
-                            var objetivo = document.getElementById('tumbados');
-                            objetivo.innerHTML = contador;
-                            window.name=contador;
                             location.reload();
+                        }if(data.estatus == "fin"){
+                            alert(data.mensaje);
+                            window.location.replace("{{route('usuario.mensaje')}}/{{$tablero->codigo}}");
                         }else{
                             alert(data.mensaje);
                             location.reload();

@@ -33,6 +33,7 @@
                                     <th>Estatus</th>
                                     <th>Jugador 1</th>
                                     <th>Jugador 2</th>
+                                    <th>Ganador</th>eje1
                                     <th>Creado</th>
                                     <th>Detalles</th>
                                 </tr>
@@ -44,6 +45,7 @@
                                     <th>Estatus</th>
                                     <th>Jugador 1</th>
                                     <th>Jugador 2</th>
+                                    <th>Ganador</th>
                                     <th>Creado</th>
                                     <th>Detalles</th>
                                 </tr>
@@ -56,6 +58,7 @@
                                         <td>{{$tablero->estatus}}</td>
                                         <td>{{$tablero->nombreJugador}}</td>
                                         <td>{{$tablero->nombreJugador2}}</td>
+                                        <td>{{$tablero->ganador_id}}</td>
                                         <td>{{$tablero->created_at}}</td>
                                         <td><a href="{{route('usuario.detalle.tablero',["codigo" => $tablero->codigo])}}" class="btn btn-primary btn-icon-split">
                                             <span class="icon text-white-50">

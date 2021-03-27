@@ -10,9 +10,13 @@
 
 @section('titulo-pagina')
 <div class="card-body text-center">
-    <h1 class="h1 mb-4 text-gray-800">Partida Finalizada {{session('usuario')->correo}}</h1>
-    <td><a href="{{route('usuario.menu')}}" class="btn-dark">Volver al menu</a></td>
-    <td><a href="{{route('usuario.menu')}}" class="btn-dark">Detallles</a></td>
+    <h1 class="h1 mb-4 text-gray-800">Partida Finalizada </h1>
+    <h2> El ganador es:{{$ganador}} </h2>
+    @for($i=0;$i<6;$i++)
+    <br>
+    @endfor
+    <td><a href="{{route('usuario.menu')}}" class="btn-dark btn-sm" ><i class="fas fa-bars"></i>Volver al menu</a></td>
+    
 </div>
 @endsection
 
